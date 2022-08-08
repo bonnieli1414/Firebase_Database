@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dataBase</title>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
+    <script>
+        // // Initialize Firebase
+        // const app = firebase.initializeApp({
+        //   apiKey: "AIzaSyCGC4ko6XLEurccnYf6pqS1CX728cebRTQ",
+        //   authDomain: "project-a7b85.firebaseapp.com",
+        //   projectId: "project-a7b85",
+        //   storageBucket: "project-a7b85.appspot.com",
+        //   messagingSenderId: "299340126979",
+        //   appId: "1:299340126979:web:0e6dd564f9539d5f426736",
+        //   measurementId: "G-P1E8XKP9E5"
+        // });
+        // // console.log(app);
+        // const database = firebase.database();
+        // // console.log(database);
+        const firebaseConfig = {
+          apiKey: "AIzaSyCGC4ko6XLEurccnYf6pqS1CX728cebRTQ",
+          authDomain: "project-a7b85.firebaseapp.com",
+          projectId: "project-a7b85",
+          storageBucket: "project-a7b85.appspot.com",
+          messagingSenderId: "299340126979",
+          appId: "1:299340126979:web:0e6dd564f9539d5f426736",
+          measurementId: "G-P1E8XKP9E5"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        // ref()尋找資料庫路徑
+        // set()新增資料
+        firebase.database().ref().set({home:'US'})
+
+
+      </script>
+</head>
+<body>
+    
+</body>
+</html>
