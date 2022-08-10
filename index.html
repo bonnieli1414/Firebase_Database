@@ -31,8 +31,11 @@
         <label for="sex">性別</label>
       </li>
       <li class="form-item">
-        <input type="radio" name="male" id="male" checked>男
-        <input type="radio" name="female" id="female">女
+        <input type="radio" id="sex" name="sex" value="male"
+        checked>
+        <label for="male">男</label>
+        <input type="radio" id="sex" name="sex" value="female">
+        <label for="female">女</label>
       </li>
       <li class="form-item">
         <input type="submit" class="form-item" id="send" value="送出">
@@ -40,8 +43,9 @@
     </ul>
   </form>
   <ul id="list">
-  
+
   </ul>
+
   
   <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
@@ -73,43 +77,58 @@
 
     // 將表單內容，寫入資料庫
     send.addEventListener('click',(e)=>{
+      let data = {
+        name: name.value,
+        email: email.value,
+        password: password.value,
+        tel: tel.value,
+        sex: sex.value,
+      }
+      console.log(data);
+
       // let data = {
-      //   name: name.value,
-      //   email: email.value,
-      //   password: password.value,
-      //   tel: tel.value,
-      //   male: male.value,
-      //   female: female.value,
+      //   content: name.value,
+      //   content: email.value,
+      //   content: password.value,
+      //   content: tel.value,
+      //   content: male.value,
+      //   content: female.value,
       // }
 
-      let data = {
-        content: name.value,
-        content: email.value,
-        content: password.value,
-        content: tel.value,
-        content: male.value,
-        content: female.value,
-      }
-      // console.log(data);
-      todos.push(data);
+      todos.set(data);
+      // todos.push(data);
     })
 
     // 顯示內容
     todos.on('value',(snapshot)=>{
       // console.log(snapshot.val());
+      // 初始化
       let str = "";
+      // 取得資料庫資料寫入data變數
       let data = snapshot.val();
+      // 用迴圈將取得的資料組起來
       for (let item in data){
-        // console.log(item);
+        console.log(item);
         str+=`
-        <li>${data[item].content}</li>
+        <li data-key=${item}>${data[item]}</li>
         `
+        // str+=`
+        // <li data-key=${item}>${data[item].content}</li>
+        // `;
+        // str+='<li data-key="'+ item +'">'+data[item].content+'</li>';
       }
       console.log(str);
+      // 將組起來的資料渲染到畫面上
       list.innerHTML = str;
-
     })
 
+    // list.addEventListener('click',(e)=>{
+    //   // console.log(e.target.nodeName);
+    //   if (e.target.nodeName="LI"){
+    //     let key = e.target.dataset.key;
+    //     todos.child(key).remove();
+    //   }
+    // })
 
   </script>
 
