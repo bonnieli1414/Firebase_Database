@@ -77,26 +77,22 @@
 
     // 將表單內容，寫入資料庫
     send.addEventListener('click',(e)=>{
-      let data = {
-        name: name.value,
-        email: email.value,
-        password: password.value,
-        tel: tel.value,
-        sex: sex.value,
+      let inputData = {
+        "name": name.value,
+        "email": email.value,
+        "password": password.value,
+        "tel": tel.value,
+        "sex": sex.value,
+        "time" :new Date().getTime(),
       }
-      console.log(data);
+      console.log(inputData);
 
-      // let data = {
-      //   content: name.value,
-      //   content: email.value,
-      //   content: password.value,
-      //   content: tel.value,
-      //   content: male.value,
-      //   content: female.value,
-      // }
+      let data = {
+        "content": inputData,
+      }
 
-      todos.set(data);
-      // todos.push(data);
+      // todos.set(data);
+      todos.push(data);
     })
 
     // 顯示內容
@@ -106,11 +102,16 @@
       let str = "";
       // 取得資料庫資料寫入data變數
       let data = snapshot.val();
+      console.log(data)
       // 用迴圈將取得的資料組起來
       for (let item in data){
         console.log(item);
         str+=`
-        <li data-key=${item}>${data[item]}</li>
+        <li data-key=${item}>${data[item].content.name}</li>
+        <li data-key=${item}>${data[item].content.email}</li>
+        <li data-key=${item}>${data[item].content.password}</li>
+        <li data-key=${item}>${data[item].content.sex}</li>
+        <li data-key=${item}>${data[item].content.tel}</li>
         `
         // str+=`
         // <li data-key=${item}>${data[item].content}</li>
@@ -119,6 +120,33 @@
       }
       console.log(str);
       // 將組起來的資料渲染到畫面上
+      list.innerHTML = str;
+    })
+    // reverse資料反轉
+    todos.on('value',(snapshot)=>{
+      // 初始化
+      let str = "";
+      data=[];
+      // 資料庫取值，組成陣列
+      snapshot.forEach(item => {
+        data.push(item.val());
+        // console.log(data);
+      });
+      // 再使用陣列方法反轉資料
+      data.reverse();
+      // console.log(data);
+      for (let item in data){
+        // console.log(item);
+        str+=`
+        <li>${data[item].content.name}</li>
+        <li>${data[item].content.email}</li>
+        <li>${data[item].content.password}</li>
+        <li>${data[item].content.sex}</li>
+        <li>${data[item].content.tel}</li>
+        <li>${data[item].content.time}</li>
+        `
+      }
+      // console.log(str);
       list.innerHTML = str;
     })
 

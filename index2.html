@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dataBase</title>
+</head>
+
+<body>
+  開始時間：<br>
+  <input type="date" name="time" id="time" value="">
+  <input type="button" id="send" value="送出">
+  <!-- <form>
+    <ul>
+      <li class="form-item" required>
+        <label for="name">姓名</label>
+        <input type="text" name="name" id="name" placeholder="陳小明">
+      </li>
+      <li class="form-item">
+        <label for="email">信箱</label>
+        <input type="email" name="email" id="email" placeholder="xxx@gmail.com">
+      </li>
+      <li class="form-item">
+        <label for="password">密碼</label>
+        <input type="password" name="password" id="password">
+      </li>
+      <li class="form-item">
+        <label for="tel">電話</label>
+        <input type="tel" name="tel" id="tel" placeholder="0912-345-678">
+      </li>
+      <li class="form-item">
+        <label for="sex">性別</label>
+      </li>
+      <li class="form-item">
+        <input type="radio" id="sex" name="sex" value="male"
+        checked>
+        <label for="male">男</label>
+        <input type="radio" id="sex" name="sex" value="female">
+        <label for="female">女</label>
+      </li>
+      <li class="form-item">
+        <input type="submit" class="form-item" id="send" value="送出">
+      </li>
+    </ul>
+  </form>
+  <ul id="list">
+
+  </ul> -->
+
+  
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
+
+  <script>
+    const config = {
+      apiKey: "AIzaSyCGC4ko6XLEurccnYf6pqS1CX728cebRTQ",
+      authDomain: "project-a7b85.firebaseapp.com",
+      projectId: "project-a7b85",
+      storageBucket: "project-a7b85.appspot.com",
+      messagingSenderId: "299340126979",
+      appId: "1:299340126979:web:0e6dd564f9539d5f426736",
+      measurementId: "G-P1E8XKP9E5"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(config);
+    
+
+    // // Dom元素
+    // const name = document.querySelector('#name');
+    // const email = document.querySelector('#email');
+    // const password = document.querySelector('#password');
+    // const tel = document.querySelector('#tel');
+    // const sex = document.querySelector('#sex');
+    // const send = document.querySelector('#send');
+    // const list = document.querySelector('#list');
+
+    // // 連線到資料庫，其中的todos
+    // const todos = firebase.database().ref('todos');
+    let data = {
+      "father": {
+        "title": "father",
+        age: 44,
+        weight: 88,
+        height: 178
+      },
+      "mom": {
+        title: "mom",
+        age: 42,
+        weight: 66,
+        height: 166
+      },
+      "son": {
+        title: "son",
+        age: 13,
+        weight: 40,
+        height: 133
+      },
+      "daughter": {
+        title: "daughter",
+        age: 8,
+        weight: 35,
+        height: 110
+      }
+    };
+
+    // 路徑>>排序('屬性')>>讀取> forEach 依序撈出資料
+    todos.orderByChild("age").on("value", (snapshot) => {
+      snapshot.forEach((item) => {
+        // console.log(item.val());
+      });
+      console.log(snapshot.val());
+    });
+
+
+    // // 將表單內容，寫入資料庫
+    // send.addEventListener('click',(e)=>{
+    //   let inputData = {
+    //     name: name.value,
+    //     email: email.value,
+    //     password: password.value,
+    //     tel: tel.value,
+    //     sex: sex.value,
+    //   }
+    //   console.log(inputData);
+
+    //   let data = {
+    //     content: inputData,
+    //   }
+
+    //   // todos.set(data);
+    //   todos.push(data);
+    // })
+
+    // // 顯示內容
+    // todos.on('value',(snapshot)=>{
+    //   // console.log(snapshot.val());
+    //   // 初始化
+    //   let str = "";
+    //   // 取得資料庫資料寫入data變數
+    //   let data = snapshot.val();
+    //   console.log(data)
+    //   // 用迴圈將取得的資料組起來
+    //   for (let item in data){
+    //     console.log(item);
+    //     str+=`
+    //     <li data-key=${item}>${data[item].content.name}</li>
+    //     <li data-key=${item}>${data[item].content.email}</li>
+    //     <li data-key=${item}>${data[item].content.password}</li>
+    //     <li data-key=${item}>${data[item].content.sex}</li>
+    //     <li data-key=${item}>${data[item].content.tel}</li>
+    //     `
+    //     // str+=`
+    //     // <li data-key=${item}>${data[item].content}</li>
+    //     // `;
+    //     // str+='<li data-key="'+ item +'">'+data[item].content+'</li>';
+    //   }
+    //   console.log(str);
+    //   // 將組起來的資料渲染到畫面上
+    //   list.innerHTML = str;
+    // })
+
+    // // list.addEventListener('click',(e)=>{
+    // //   // console.log(e.target.nodeName);
+    // //   if (e.target.nodeName="LI"){
+    // //     let key = e.target.dataset.key;
+    // //     todos.child(key).remove();
+    // //   }
+    // // })
+
+    // let people = {
+    //     "mike": {
+    //       "height" : 4,
+    //       "length" : 12.5,
+    //       "weight": 5000,
+    //       "mail" :"aa@gmail.com",
+    //     },
+    //     "casper": {
+    //       "height" : 3,
+    //       "length" : 9,
+    //       "weight" : 4500,
+    //       "mail" :"bb@gmail.com",
+    //     },
+    //     "bob": {
+    //       "height": "dalse",
+    //       "length" : false,
+    //       "weight" : 2500,
+    //       "mail" :"cc@gmail.com",
+    //     },
+    //     "john": {
+    //       "height" : true,
+    //       "length" : 9,
+    //       "weight" : 3500,
+    //       "mail" :"dd@gmail.com",
+    //     }
+    //     ,
+    //     "josh": {
+    //       "height" : false,
+    //       "length" : 9,
+    //       "weight" : 2500,
+    //       "mail" :"ee@gmail.com",
+    //     },
+    //     'boss':{
+    //       "length": 3,
+    //       "mail" :"ff@gmail.com",
+    //     },
+    //     'frank':{
+    //       height:{'aaa':1},
+    //       "mail" :"gg@gmail.com",
+    //     }
+    //   };
+    // firebase.database().ref('people').set(people);
+    // let peopleRef = firebase.database().ref('people');
+    // peopleRef.once('value',(snapshot)=>{
+    //   console.log(snapshot.val());
+    // })
+    // 路徑>>排序('屬性')>>讀取> forEach 依序撈出資料
+    // startAt表示xx以上
+    // endAt表示xx以下
+    // startAt和endAt可以一起使用
+    // 路徑>>排序('屬性')>>過濾>>讀取> forEach 依序撈出資料
+    // 路徑>>排序('屬性')>>過濾>>限制筆數>>讀取> forEach 依序撈出資料
+    // 例如：搜尋weight超過3500以上資料，
+    //      筆數限制2筆
+    // peopleRef.orderByChild('weight').startAt(3500).limitToFirst(2).on('value',(snapshot)=>{
+    //   snapshot.forEach(item => {
+    //     // console.log(item.val());
+    //   });
+    //   console.log(snapshot.val());
+    // });
+
+    // 例如：搜尋weight超過3500以下資料，
+    //      筆數限制2筆
+    // peopleRef.orderByChild('weight').startAt(3500).limitToLast(2).on('value',(snapshot) => {
+    //   snapshot.forEach(item =>{
+    //     // console.log(item.val());
+    //   });
+    //   console.log(snapshot.val());
+    // })
+
+    // // equalTo表示單獨只要符合某資料
+    // // 路徑>>排序('屬性')>>過濾>>讀取> forEach 依序撈出資料
+    // peopleRef.orderByChild('weight').equalTo(4500).on('value',(snapshot)=>{
+    //   snapshot.forEach(item => {
+    //     console.log(item.val());
+    //   });
+    //   console.log(snapshot.val());
+    // });
+
+    // // 實務上常會用mail搜尋，如果客戶忘記資料，
+    // // 請客戶提供mail，再由mail搜尋關鍵字
+    // peopleRef.orderByChild('mail').equalTo('gg@gmail.com').on('value',(snapshot)=>{
+    //   snapshot.forEach(item => {
+    //   })
+    //   console.log(snapshot.val());
+    // })
+    // // js內建時間的原生語法
+    const time = new Date();
+    console.log(time);
+    // console.log(time.getFullYear());
+    // // 0 = 1月，以此類推
+    // console.log(time.getMonth());
+    // // 0 = 星期日，以此類推
+    // console.log(time.getDay());
+    // console.log(time.getHours());
+    // console.log(time.getMinutes());
+    // console.log(time.getSeconds());
+    // // 毫秒，1000毫秒 = 1秒
+    // console.log(time.getMilliseconds());
+
+    // // timestamp時間戳記UNIX
+    // console.log(new Date().getTime());
+    // // 可以帶入時間，格式可以用 /
+    // console.log(new Date('2022/8/11'));
+    // // 可以帶入時間，格式可以帶 -，但舊瀏覽器可以會不吃
+    // console.log(new Date('2022-08-11'));
+    // // 可以帶入時間戳，注意不要用字串型別
+    // console.log(new Date(1660199332268));
+    // const time = document.querySelector('#time');
+    // const send = document.querySelector('#send');
+    // send.addEventListener('click',(e)=>{
+    //   console.log(time.value);
+    //   let now = new Date(time.value);
+    //   // setHours(時,分,秒,毫秒)
+    //   let startTime = now.setHours(0,0,0,0);
+    //   console.log(startTime);
+    //   let endTime = now.setHours(23,59,59,999);
+    //   console.log(endTime);
+    // })
+
+    // let data = [1,2,3,4];
+    // data.reverse();
+    // console.log(data);
+
+
+    
+
+
+  </script>
+
+</body>
+
+</html>
